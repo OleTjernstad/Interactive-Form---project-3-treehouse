@@ -28,3 +28,20 @@ shirtDesigns.addEventListener("change", (event) => {
         shirtColor.disabled = true;
     }
 });
+
+const activities = document.querySelector("#activities");
+const activitiesCost = document.querySelector("#activities-cost");
+let totalCost = 0;
+
+activities.addEventListener("change", (event) => {
+    console.log(event.target)
+    if (event.target.type == 'checkbox') {
+        if (event.target.checked) {
+            totalCost += parseInt(event.target.dataset.cost);
+        } else {
+            totalCost -= parseInt(event.target.dataset.cost);
+        }
+
+        activitiesCost.textContent = `Total: $${totalCost}`;
+    }
+});
