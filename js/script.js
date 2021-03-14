@@ -7,10 +7,23 @@ jobRole.addEventListener("change", (event) => {
     } else {
         jobRole.nextElementSibling.style.display = "none";
     }
-//   if (event.target.tagName == "IMG") {
-//     search(event.target.parentNode.previousElementSibling.value);
-//   } else if (event.target.tagName == "BUTTON") {
-//     // if somehow the button element is clicked and not the IMG
-//     search(event.target.previousElementSibling.value);
-//   }
+});
+
+
+const shirtDesigns = document.querySelector("#design");
+const shirtColor = document.querySelector("#color");
+
+shirtDesigns.addEventListener("change", (event) => {
+    if (event.target.value === "js puns" || event.target.value === "heart js") {
+      shirtColor.disabled = false;
+      for (let item of shirtColor.children) {
+          if (item.dataset.theme == event.target.value) {
+              item.hidden = false;
+          } else {
+              item.hidden = true;
+          }
+      }
+    } else {
+      shirtColor.disabled = true;
+    }
 });
