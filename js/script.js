@@ -15,15 +15,16 @@ const shirtColor = document.querySelector("#color");
 
 shirtDesigns.addEventListener("change", (event) => {
     if (event.target.value === "js puns" || event.target.value === "heart js") {
-      shirtColor.disabled = false;
-      for (let item of shirtColor.children) {
-          if (item.dataset.theme == event.target.value) {
-              item.hidden = false;
-          } else {
-              item.hidden = true;
-          }
-      }
+        shirtColor.disabled = false;
+    for (let item of shirtColor.children) {
+        item.selected = false;
+        if (item.dataset.theme == event.target.value) {
+            item.hidden = false;
+        } else {
+            item.hidden = true;
+        }
+    }
     } else {
-      shirtColor.disabled = true;
+        shirtColor.disabled = true;
     }
 });
