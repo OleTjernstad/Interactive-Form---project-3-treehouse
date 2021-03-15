@@ -10,31 +10,31 @@ let totalCost = 0;
 
 const payment = document.querySelector("#payment");
 
-jobRole.addEventListener("change", (event) => {
-    if (event.target.value === 'other') {
-        jobRole.nextElementSibling.style.display = 'block';
-    } else {
-        jobRole.nextElementSibling.style.display = "none";
-    }
-});
+const jobRoleEvaluation = (event) => {
+  if (event.target.value === "other") {
+    jobRole.nextElementSibling.style.display = "block";
+  } else {
+    jobRole.nextElementSibling.style.display = "none";
+  }
+}; 
 
-shirtDesigns.addEventListener("change", (event) => {
+const shirtDesignsEvaluation = (event) => {
     if (event.target.value === "js puns" || event.target.value === "heart js") {
-        shirtColor.disabled = false;
-    for (let item of shirtColor.children) {
+      shirtColor.disabled = false;
+      for (let item of shirtColor.children) {
         item.selected = false;
         if (item.dataset.theme == event.target.value) {
-            item.hidden = false;
+          item.hidden = false;
         } else {
-            item.hidden = true;
+          item.hidden = true;
         }
-    }
+      }
     } else {
-        shirtColor.disabled = true;
+      shirtColor.disabled = true;
     }
-});
+}
 
-activities.addEventListener("change", (event) => {
+const activitiesEvaluation = (event) => {
     if (event.target.type == 'checkbox') {
         if (event.target.checked) {
             totalCost += parseInt(event.target.dataset.cost);
@@ -44,48 +44,44 @@ activities.addEventListener("change", (event) => {
 
         activitiesCost.textContent = `Total: $${totalCost}`;
     }
-});
+};
 
-payment.addEventListener("change", (event) => {
-   
-    switch (event.target.value) {
-      case "credit-card":
-          for (let child of payment.parentElement.parentElement.children) {
-              if (child.className != "payment-method-box") {
-                if (child.id == "credit-card") {
-                  child.style.display = "block";
-                } else {
-                  child.style.display = "none";
-                }
-            }
-          }
-        break;
-      case "paypal":
-           for (let child of payment.parentElement.parentElement.children) {
-             if (child.className != "payment-method-box") {
-               if (child.id == "paypal") {
-                 child.style.display = "block";
-               } else {
-                 child.style.display = "none";
-               }
-             }
-           }
-        break;
-      case "bitcoin":
-           for (let child of payment.parentElement.parentElement.children) {
-             if (child.className != "payment-method-box") {
-               if (child.id == "bitcoin") {
-                 child.style.display = "block";
-               } else {
-                 child.style.display = "none";
-               }
-             }
-           }
-        break; 
-      default:
-        break;
+const paymentMethodsActivation = (optionToShow) => {
+    for (let child of payment.parentElement.parentElement.children) {
+      if (child.className != "payment-method-box") {
+        if (child.id == optionToShow) {
+          child.style.display = "block";
+        } else {
+          child.style.display = "none";
+        }
+      }
     }
-});
+
+}
+
+const paymentEvaluation = (event) => {
+  switch (event.target.value) {
+    case "credit-card":
+        paymentMethodsActivation("credit-card");
+      break;
+    case "paypal":
+        paymentMethodsActivation("paypal");
+      break;
+    case "bitcoin":
+      paymentMethodsActivation("bitcoin");
+      break;
+    default:
+      break;
+  }
+}
+
+jobRole.addEventListener("change", jobRoleEvaluation)
+
+shirtDesigns.addEventListener("change", shirtDesignsEvaluation);
+
+activities.addEventListener("change", activitiesEvaluation);
+
+payment.addEventListener("change", paymentEvaluation);
 
 const init = () => {
     jobRole.nextElementSibling.style.display = "none";
