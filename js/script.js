@@ -88,3 +88,18 @@ payment.addEventListener("change", (event) => {
         break;
     }
 });
+
+const init = () => {
+    jobRole.nextElementSibling.style.display = "none";
+
+    shirtColor.disabled;
+
+    for (let child of payment.parentElement.parentElement.children) {
+  
+        if (child.id == "bitcoin" || child.id == "paypal") {
+        child.style.display = "none";
+        } 
+    }
+
+}
+init();
