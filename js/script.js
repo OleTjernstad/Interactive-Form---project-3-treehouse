@@ -10,6 +10,8 @@ let totalCost = 0;
 
 const payment = document.querySelector("#payment");
 
+const registrationForm = document.querySelector("form");
+
 const jobRoleEvaluation = (event) => {
   if (event.target.value === "other") {
     jobRole.nextElementSibling.style.display = "block";
@@ -75,6 +77,20 @@ const paymentEvaluation = (event) => {
   }
 }
 
+const formSubmit = (event) => {
+    let valid = true;
+    
+    valid = validateNameField(event.target.querySelector("#name")) && valid ? true : false;
+    valid = validateEmailField(event.target.querySelector("#email")) && valid ? true : false;
+
+    console.log(valid);
+
+    if (!status) {
+      event.preventDefault();
+    }
+    status = true;
+}
+
 jobRole.addEventListener("change", jobRoleEvaluation)
 
 shirtDesigns.addEventListener("change", shirtDesignsEvaluation);
@@ -82,6 +98,8 @@ shirtDesigns.addEventListener("change", shirtDesignsEvaluation);
 activities.addEventListener("change", activitiesEvaluation);
 
 payment.addEventListener("change", paymentEvaluation);
+
+registrationForm.addEventListener("submit", formSubmit);
 
 const init = () => {
     jobRole.nextElementSibling.style.display = "none";
