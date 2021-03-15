@@ -1,6 +1,15 @@
 
 const jobRole = document.querySelector("#title");
 
+const shirtDesigns = document.querySelector("#design");
+const shirtColor = document.querySelector("#color");
+
+const activities = document.querySelector("#activities");
+const activitiesCost = document.querySelector("#activities-cost");
+let totalCost = 0;
+
+const payment = document.querySelector("#payment");
+
 jobRole.addEventListener("change", (event) => {
     if (event.target.value === 'other') {
         jobRole.nextElementSibling.style.display = 'block';
@@ -8,10 +17,6 @@ jobRole.addEventListener("change", (event) => {
         jobRole.nextElementSibling.style.display = "none";
     }
 });
-
-
-const shirtDesigns = document.querySelector("#design");
-const shirtColor = document.querySelector("#color");
 
 shirtDesigns.addEventListener("change", (event) => {
     if (event.target.value === "js puns" || event.target.value === "heart js") {
@@ -29,10 +34,6 @@ shirtDesigns.addEventListener("change", (event) => {
     }
 });
 
-const activities = document.querySelector("#activities");
-const activitiesCost = document.querySelector("#activities-cost");
-let totalCost = 0;
-
 activities.addEventListener("change", (event) => {
     if (event.target.type == 'checkbox') {
         if (event.target.checked) {
@@ -44,9 +45,6 @@ activities.addEventListener("change", (event) => {
         activitiesCost.textContent = `Total: $${totalCost}`;
     }
 });
-
-const payment = document.querySelector("#payment");
-
 
 payment.addEventListener("change", (event) => {
    
