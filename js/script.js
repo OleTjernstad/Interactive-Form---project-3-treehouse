@@ -83,6 +83,15 @@ const formSubmit = (event) => {
     valid = validateNameField(event.target.querySelector("#name"));
     valid = validateEmailField(event.target.querySelector("#email")) && valid ? true : false;
     valid = validateActivities(event.target.querySelectorAll(".activity")) && valid ? true : false;
+    valid =
+      validatePayment(
+        event.target.querySelector("#cc-num"),
+        event.target.querySelector("#zip"),
+        event.target.querySelector("#cvv"),
+        payment.value
+      ) && valid
+        ? true
+        : false;
 
     console.log('valid', valid);
 

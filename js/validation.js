@@ -9,6 +9,12 @@ const _isValidEmail = (email) => {
     return regex.test(email);
 };
 
+const _isValidNumber = (number, length) => {
+    const regex = new RegExp(`^\\d{${length}}$`);
+    console.log(regex);
+    return regex.test(number);
+}
+
 const validateNameField = (element) => {
     if (_isNotEmpty(element.value)) {
         return true;
@@ -32,12 +38,23 @@ const validateActivities = (elements) => {
             selectedItems.push(element);
         }
     }
-    console.log(selectedItems);
 
     if(selectedItems.length < 1) {
-        console.log('No event selected')
         return false;
-
     } 
+    return true;
+};
+const validatePayment = (cardNum, zipCode, CVV, selectedPaymentType) => {
+    console.log(selectedPaymentType);
+    if (selectedPaymentType === "credit-card") {
+        
+        let isCVVValid = _isValidNumber(CVV.value, 3);
+        let isZipValid = _isValidNumber(zipCode.value, 5);
+        let isCardNumValid = _isValidNumber(cardNum.value, "13,16");
+
+        console.log("card", { isCVVValid, isZipValid, isCardNumValid });
+
+        return isCVVValid && isZipValid && isCardNumValid;
+    }
     return true;
 };
