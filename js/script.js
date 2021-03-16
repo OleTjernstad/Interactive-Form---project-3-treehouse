@@ -80,15 +80,15 @@ const paymentEvaluation = (event) => {
 const formSubmit = (event) => {
     let valid = true;
     
-    valid = validateNameField(event.target.querySelector("#name")) && valid ? true : false;
+    valid = validateNameField(event.target.querySelector("#name"));
     valid = validateEmailField(event.target.querySelector("#email")) && valid ? true : false;
+    valid = validateActivities(event.target.querySelectorAll(".activity")) && valid ? true : false;
 
-    console.log(valid);
+    console.log('valid', valid);
 
-    if (!status) {
+    if (!valid) {
       event.preventDefault();
     }
-    status = true;
 }
 
 jobRole.addEventListener("change", jobRoleEvaluation)
