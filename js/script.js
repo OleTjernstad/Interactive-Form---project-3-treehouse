@@ -5,7 +5,7 @@ const shirtDesigns = document.querySelector("#design");
 const shirtColor = document.querySelector("#color");
 
 const activities = document.querySelector("#activities");
-const allActivitiesCheckboxes = document.querySelectorAll(".js-activity");
+const allActivitiesCheckboxes = activities.querySelectorAll("input");
 const activitiesCost = document.querySelector("#activities-cost");
 let totalCost = 0;
 
@@ -106,7 +106,7 @@ const formSubmit = (event) => {
     
     valid = validateNameField(event.target.querySelector("#name"));
     valid = validateEmailField(event.target.querySelector("#email")) && valid ? true : false;
-    valid = validateActivities(event.target.querySelectorAll(".js-activity")) && valid ? true : false;
+    valid = validateActivities(allActivitiesCheckboxes) && valid ? true : false;
     valid =
       validatePayment(
         event.target.querySelector("#cc-num"),
