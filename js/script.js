@@ -13,6 +13,28 @@ const payment = document.querySelector("#payment");
 
 const registrationForm = document.querySelector("form");
 
+const eventsSameTime = (element) => {
+    
+    if (element.checked) {
+        for (let activity of allActivitiesCheckboxes) {
+            if (activity.dataset.dayAndTime === element.dataset.dayAndTime && activity.name != element.name) {
+                activity.parentElement.classList.add("deactivatedActivity");
+                activity.disabled = true;
+            }
+        }
+    } else {
+        for (let activity of allActivitiesCheckboxes) {
+          if (
+            activity.dataset.dayAndTime === element.dataset.dayAndTime &&
+            activity.name != element.name
+          ) {
+            activity.parentElement.classList.remove("deactivatedActivity");
+            activity.disabled = false;
+          }
+        }
+    }
+};
+
 const jobRoleEvaluation = (event) => {
   if (event.target.value === "other") {
     jobRole.nextElementSibling.style.display = "block";
@@ -39,6 +61,7 @@ const shirtDesignsEvaluation = (event) => {
 
 const activitiesEvaluation = (event) => {
     if (event.target.type == 'checkbox') {
+        eventsSameTime(event.target);
         if (event.target.checked) {
             totalCost += parseInt(event.target.dataset.cost);
         } else {

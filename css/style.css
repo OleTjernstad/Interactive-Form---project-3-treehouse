@@ -273,6 +273,10 @@ button:hover {
 .activities.not-valid::after {
   top: 5px;
 }
+
+.deactivatedActivity {
+  opacity: 0.3;
+}
 /* ================================= 
   Basic info and t shirt styles
 ==================================== */

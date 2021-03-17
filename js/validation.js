@@ -16,14 +16,14 @@ const _isValidNumber = (number, length) => {
 }
 
 const _displayNotValid = (element) => {
-     element.classList.add("not-valid");
-     element.classList.remove("valid");
-     element.lastElementChild.style.display = "block"; 
+    element.classList.add("not-valid");
+    element.classList.remove("valid");
+    element.lastElementChild.style.display = "block"; 
 }
 const _removeNotValid = (element) => {
-      element.classList.remove("not-valid");
-      element.classList.add("valid");
-     element.lastElementChild.style.display = "none"; 
+    element.classList.remove("not-valid");
+    element.classList.add("valid");
+    element.lastElementChild.style.display = "none"; 
 }
 
 const validateNameField = (element) => {
