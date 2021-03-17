@@ -103,9 +103,9 @@ const formSubmit = (event) => {
 
 const focusStateActivities = (event) => {
     if (event.type === 'focus') {
-        event.target.parentElement.className = "focus";
+        event.target.parentElement.classList.add("focus");
     } else if (event.type === 'blur') {
-        event.target.parentElement.className = '';
+        event.target.parentElement.classList.remove("focus");
     }
 };
 
