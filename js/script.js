@@ -5,6 +5,7 @@ const shirtDesigns = document.querySelector("#design");
 const shirtColor = document.querySelector("#color");
 
 const activities = document.querySelector("#activities");
+const allActivitiesCheckboxes = document.querySelectorAll(".js-activity");
 const activitiesCost = document.querySelector("#activities-cost");
 let totalCost = 0;
 
@@ -82,7 +83,7 @@ const formSubmit = (event) => {
     
     valid = validateNameField(event.target.querySelector("#name"));
     valid = validateEmailField(event.target.querySelector("#email")) && valid ? true : false;
-    valid = validateActivities(event.target.querySelectorAll(".activity")) && valid ? true : false;
+    valid = validateActivities(event.target.querySelectorAll(".js-activity")) && valid ? true : false;
     valid =
       validatePayment(
         event.target.querySelector("#cc-num"),
@@ -100,6 +101,14 @@ const formSubmit = (event) => {
     }
 }
 
+const focusStateActivities = (event) => {
+    if (event.type === 'focus') {
+        event.target.parentElement.className = "focus";
+    } else if (event.type === 'blur') {
+        event.target.parentElement.className = '';
+    }
+};
+
 jobRole.addEventListener("change", jobRoleEvaluation)
 
 shirtDesigns.addEventListener("change", shirtDesignsEvaluation);
@@ -116,10 +125,14 @@ const init = () => {
     shirtColor.disabled;
 
     for (let child of payment.parentElement.parentElement.children) {
-  
         if (child.id == "bitcoin" || child.id == "paypal") {
         child.style.display = "none";
         } 
+    }
+
+    for (let activity of allActivitiesCheckboxes) {
+      activity.addEventListener("focus", focusStateActivities);
+      activity.addEventListener("blur", focusStateActivities);
     }
 
 }
