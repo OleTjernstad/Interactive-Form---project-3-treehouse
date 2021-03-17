@@ -15,18 +15,33 @@ const _isValidNumber = (number, length) => {
     return regex.test(number);
 }
 
+const _displayNotValid = (element) => {
+     element.classList.add("not-valid");
+     element.classList.remove("valid");
+     element.lastElementChild.style.display = "block"; 
+}
+const _removeNotValid = (element) => {
+      element.classList.remove("not-valid");
+      element.classList.add("valid");
+     element.lastElementChild.style.display = "none"; 
+}
+
 const validateNameField = (element) => {
     if (_isNotEmpty(element.value)) {
+        _removeNotValid(element.parentElement);
         return true;
     }
+    _displayNotValid(element.parentElement);
     console.log('empty name');
     return false;
 };
 
 const validateEmailField = (element) => {
     if (_isValidEmail(element.value)) {
+        _removeNotValid(element.parentElement);
         return true;
     }
+    _displayNotValid(element.parentElement);
     console.log("Email not valid");
     return false;
 };
@@ -40,8 +55,10 @@ const validateActivities = (elements) => {
     }
 
     if(selectedItems.length < 1) {
+        _displayNotValid(elements[0].parentElement.parentElement.parentElement);
         return false;
     } 
+    _removeNotValid(elements[0].parentElement.parentElement.parentElement);
     return true;
 };
 const validatePayment = (cardNum, zipCode, CVV, selectedPaymentType) => {
