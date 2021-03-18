@@ -11,7 +11,6 @@ const _isValidEmail = (email) => {
 
 const _isValidNumber = (number, length) => {
     const regex = new RegExp(`^\\d{${length}}$`);
-    console.log(regex);
     return regex.test(number);
 }
 
@@ -32,7 +31,6 @@ const validateNameField = (element) => {
         return true;
     }
     _displayNotValid(element.parentElement);
-    console.log('empty name');
     return false;
 };
 
@@ -42,7 +40,6 @@ const validateEmailField = (element) => {
         return true;
     }
     _displayNotValid(element.parentElement);
-    console.log("Email not valid");
     return false;
 };
 
@@ -61,15 +58,28 @@ const validateActivities = (elements) => {
     _removeNotValid(elements[0].parentElement.parentElement.parentElement);
     return true;
 };
+const _showOrHideErrorForPayment = (element, valid) => {
+    if (valid) {
+        _removeNotValid(element.parentElement);
+    } else {
+        _displayNotValid(element.parentElement);
+    }
+    return valid;
+}
 const validatePayment = (cardNum, zipCode, CVV, selectedPaymentType) => {
-    console.log(selectedPaymentType);
     if (selectedPaymentType === "credit-card") {
         
-        let isCVVValid = _isValidNumber(CVV.value, 3);
-        let isZipValid = _isValidNumber(zipCode.value, 5);
-        let isCardNumValid = _isValidNumber(cardNum.value, "13,16");
+        let isCVVValid = _showOrHideErrorForPayment(
+          CVV, _isValidNumber(CVV.value, 3)
+        );
+        let isZipValid = _showOrHideErrorForPayment(
+          zipCode, _isValidNumber(zipCode.value, 5)
+        );
+        let isCardNumValid = _showOrHideErrorForPayment(
+          cardNum, _isValidNumber(cardNum.value, "13,16")
+        );
 
-        console.log("card", { isCVVValid, isZipValid, isCardNumValid });
+       if (isCVVValid)
 
         return isCVVValid && isZipValid && isCardNumValid;
     }

@@ -117,8 +117,6 @@ const formSubmit = (event) => {
         ? true
         : false;
 
-    console.log('valid', valid);
-
     if (!valid) {
       event.preventDefault();
     }
