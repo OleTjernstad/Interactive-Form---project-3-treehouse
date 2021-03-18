@@ -1,4 +1,7 @@
 
+/**
+ * Select elements to interact with
+ */
 const basicInfo = document.querySelector(".basic-info");
 
 const shirtDesigns = document.querySelector("#design");
@@ -13,6 +16,11 @@ const payment = document.querySelector("#payment");
 
 const registrationForm = document.querySelector("form");
 
+/**
+ * Prevent the user to select events with the same day and time
+ * 
+ * @param {HTMLElement} element 
+ */
 const eventsSameTime = (element) => {
     
     if (element.checked) {
@@ -35,6 +43,11 @@ const eventsSameTime = (element) => {
     }
 };
 
+/**
+ * Evaluate the job role field and hide or display the other field
+ * 
+ * @param {event} event 
+ */
 const jobRoleEvaluation = (event) => {
   if (event.target.value === "other") {
     basicInfo.querySelector("#other-job-role").style.display = "block";
@@ -43,6 +56,11 @@ const jobRoleEvaluation = (event) => {
   }
 }; 
 
+/**
+ * Evaluate the shirt designs and display the relevant colors
+ * 
+ * @param {event} event 
+ */
 const shirtDesignsEvaluation = (event) => {
     if (event.target.value === "js puns" || event.target.value === "heart js") {
       shirtColor.disabled = false;
@@ -59,6 +77,11 @@ const shirtDesignsEvaluation = (event) => {
     }
 }
 
+/**
+ * Evaluate the activities for day and time and add or retract the event cost
+ * 
+ * @param {event} event 
+ */
 const activitiesEvaluation = (event) => {
     if (event.target.type == 'checkbox') {
         eventsSameTime(event.target);
@@ -72,6 +95,11 @@ const activitiesEvaluation = (event) => {
     }
 };
 
+/**
+ * Activate the selected payment options and deactivate the others
+ * 
+ * @param {string} optionToShow 
+ */
 const paymentMethodsActivation = (optionToShow) => {
     for (let child of payment.parentElement.parentElement.children) {
       if (child.className != "payment-method-box") {
@@ -85,22 +113,13 @@ const paymentMethodsActivation = (optionToShow) => {
 
 }
 
-const paymentEvaluation = (event) => {
-  switch (event.target.value) {
-    case "credit-card":
-        paymentMethodsActivation("credit-card");
-      break;
-    case "paypal":
-        paymentMethodsActivation("paypal");
-      break;
-    case "bitcoin":
-      paymentMethodsActivation("bitcoin");
-      break;
-    default:
-      break;
-  }
-}
-
+/**
+ * Run validation on submit and prevent default if form not valid
+ * 
+ * @param {event} event 
+ * 
+ * @returns 
+ */
 const formSubmit = (event) => {
 
     let isNameValid = validateNameField(basicInfo.querySelector("#name"));
@@ -116,11 +135,16 @@ const formSubmit = (event) => {
       );
 
     if (isNameValid && isEmailValid && isActivitiesValid && isPaymentValid) {
-      return true;
+      return;
     }
     event.preventDefault();
 }
 
+/**
+ * React on focus and blur on activities and add or remove class
+ * 
+ * @param {event} event 
+ */
 const focusStateActivities = (event) => {
     if (event.type === 'focus') {
         event.target.parentElement.classList.add("focus");
@@ -129,6 +153,11 @@ const focusStateActivities = (event) => {
     }
 };
 
+/**
+ * run correct function when live validating
+ * 
+ * @param {HTMLElement} element 
+ */
 const liveValidation = (element) => {
     if (element.id) {
     switch (element.id) {
@@ -156,21 +185,9 @@ const liveValidation = (element) => {
 
 };
 
-basicInfo.addEventListener("change", jobRoleEvaluation);
-shirtDesigns.addEventListener("change", shirtDesignsEvaluation);
-activities.addEventListener("change", (event) => {
-    activitiesEvaluation(event); 
-    liveValidation(event.target)
-});
-payment.addEventListener("change", paymentEvaluation);
-
-registrationForm.addEventListener("submit", formSubmit);
-
-basicInfo.addEventListener("keyup", (event) => liveValidation(event.target));
-document
-  .querySelector("#credit-card")
-  .addEventListener("keyup", (event) => liveValidation(event.target));
-
+/**
+ * Start the app and add event listeners and make form interactive
+ */
 const init = () => {
     basicInfo.querySelector("#other-job-role").style.display = "none";
 
@@ -187,5 +204,23 @@ const init = () => {
       activity.addEventListener("blur", focusStateActivities);
     }
 
+    basicInfo.addEventListener("change", jobRoleEvaluation);
+    shirtDesigns.addEventListener("change", shirtDesignsEvaluation);
+    activities.addEventListener("change", (event) => {
+      activitiesEvaluation(event);
+      liveValidation(event.target);
+    });
+    payment.addEventListener("change", (event) => paymentMethodsActivation(event.target.value));
+
+    registrationForm.addEventListener("submit", formSubmit);
+
+    basicInfo.addEventListener("keyup", (event) =>
+      liveValidation(event.target)
+    );
+    document
+      .querySelector("#credit-card")
+      .addEventListener("keyup", (event) => liveValidation(event.target));
+
 }
+
 init();

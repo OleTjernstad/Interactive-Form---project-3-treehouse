@@ -1,30 +1,85 @@
-
+/**
+ * Check if string contains a word character
+ * 
+ * @param {string} string string to test
+ * 
+ * @returns boolean
+ */
 const _isNotEmpty = (string) => {
     const regex = /\w+/;
     return regex.test(string);
 };
-
+/**
+ * Check if string is valid email
+ * 
+ * @param {string} email email string to test
+ * 
+ * @returns boolean
+ */
 const _isValidEmail = (email) => {
     const regex = /^[^@]+@[^@]+\.[a-z]+$/i;
     return regex.test(email);
 };
 
+/**
+ * Check if test string is a valid number of specified length
+ * 
+ * @param {number} number the number to test
+ * @param {string} length the regex length string (1 | 1, | 2,3)
+ * 
+ * @returns boolean
+ */
 const _isValidNumber = (number, length) => {
     const regex = new RegExp(`^\\d{${length}}$`);
     return regex.test(number);
 }
 
+/**
+ * Show the error message 
+ * 
+ * @param {HTMLElement} element the element to add not-valid / valid class to
+ * @param {string} hintSelector the identifier of the message block
+ */
 const _displayNotValid = (element, hintSelector) => {
     element.classList.add("not-valid");
     element.classList.remove("valid");
     element.querySelector(hintSelector).style.display = "block"; 
 }
+
+/**
+ * Remove the error message 
+ * 
+ * @param {HTMLElement} element the element to add not-valid / valid class to
+ * @param {string} hintSelector the identifier of the message block
+ */
 const _removeNotValid = (element, hintSelector) => {
     element.classList.remove("not-valid");
     element.classList.add("valid");
     element.querySelector(hintSelector).style.display = "none"; 
 }
 
+/**
+ * add or remove the error message
+ * 
+ * @param {HTMLElement} element The validated element
+ * @param {boolean} valid to add or remove the message
+ * @param {string} hintSelector the message selector
+ */
+const _showOrHideError = (element, valid, hintSelector) => {
+  if (valid) {
+    _removeNotValid(element.parentElement, hintSelector);
+  } else {
+    _displayNotValid(element.parentElement, hintSelector);
+  }
+};
+
+/**
+ * Validating the name field and add / remove error message
+ * 
+ * @param {HTMLElement} element the element to validate
+ * 
+ * @returns boolean
+ */
 const validateNameField = (element) => {
     let valid = true;
     valid = _isNotEmpty(element.value);
@@ -33,6 +88,13 @@ const validateNameField = (element) => {
    return valid;
 };
 
+/**
+ * Validating the email field and add / remove error message
+ * 
+ * @param {HTMLElement} element the element to validate
+ * 
+ * @returns boolean
+ */
 const validateEmailField = (element) => {
     let valid = true;
     valid = _isNotEmpty(element.value);
@@ -44,6 +106,13 @@ const validateEmailField = (element) => {
     return valid;
 };
 
+/**
+ * Validating the activities field and add / remove error message
+ * 
+ * @param {HTMLElement} element the element to validate
+ * 
+ * @returns boolean
+ */
 const validateActivities = (elements) => {
     let selectedItems = [];
     for (let element of elements) {
@@ -67,13 +136,14 @@ const validateActivities = (elements) => {
     
     return true;
 };
-const _showOrHideError = (element, valid, hintSelector) => {
-    if (valid) {
-        _removeNotValid(element.parentElement, hintSelector);
-    } else {
-        _displayNotValid(element.parentElement, hintSelector);
-    }
-}
+
+/**
+ * Validate the CVV field and add or remove the error message
+ * 
+ * @param {HTMLElement} CVV The CVV element to validate
+ * 
+ * @returns boolean
+ */
 const validateCVV = (CVV) => {
     let valid = true;
     valid = _isNotEmpty(CVV.value);
@@ -87,6 +157,14 @@ const validateCVV = (CVV) => {
 
     return valid;
 }
+
+/**
+ * Validate the zipCode field and add or remove the error message
+ * 
+ * @param {HTMLElement} zipCode The zipCode element to validate
+ * 
+ * @returns boolean
+ */
 const validateZip = (zipCode) => {
     let valid = true;
     valid = _isNotEmpty(zipCode.value);
@@ -100,6 +178,14 @@ const validateZip = (zipCode) => {
 
     return valid;
 }
+
+/**
+ * Validate the cardNum field and add or remove the error message
+ * 
+ * @param {HTMLElement} cardNum The cardNum element to validate
+ * 
+ * @returns boolean
+ */
 const validateCardNum = (cardNum) => {
     let valid = true;
     valid = _isNotEmpty(cardNum.value);
@@ -113,6 +199,16 @@ const validateCardNum = (cardNum) => {
     
     return valid;
 }
+/**
+ * Validate all payment fields on submit if credit-card is selected
+ * 
+ * @param {HTMLElement} cardNum The Credit card field element
+ * @param {HTMLElement} zipCode  The zip Code field element
+ * @param {HTMLElement} CVV The CVV field element
+ * @param {string} selectedPaymentType the selected payment type
+ * 
+ * @returns boolean
+ */
 const validatePayment = (cardNum, zipCode, CVV, selectedPaymentType) => {
     if (selectedPaymentType === "credit-card") {
         
