@@ -197,21 +197,27 @@
             <div class="num-box">
               <label for="cc-num">Card Number: <span class="asterisk">*</span>
                 <input id="cc-num" name="user-cc-num" type="text" class="error-border">
+                <span id="cc-hint-number-only" class="cc-hint hint">Credit card number must be only numbers between 0 and 9</span>
                 <span id="cc-hint" class="cc-hint hint">Credit card number must be between 13 - 16 digits</span>
+                <span id="cc-hint-empty" class="cc-hint hint">Credit card number field cannot be blank</span>
               </label>
             </div>
 
             <div class="zip-box">
               <label for="zip">Zip Code: <span class="asterisk">*</span>
                 <input id="zip" name="user-zip" type="text" class="error-border">
+                <span id="zip-hint-number-only" class="zip-hint hint">Zip Code must be only numbers between 0 and 9</span>
                 <span id="zip-hint" class="zip-hint hint">Zip Code must be 5 digits</span>
+                <span id="zip-hint-empty" class="zip-hint hint">Zip Code field cannot be blank</span>
               </label>
             </div>
 
             <div class="cvv-box">
               <label for="cvv">CVV: <span class="asterisk">*</span>
                 <input id="cvv" name="user-cvv" type="text" class="error-border">
+                <span id="cvv-hint-number-only" class="cvv-hint hint">CVV must be only numbers between 0 and 9</span>
                 <span id="cvv-hint" class="cvv-hint hint">CVV must be 3 digits</span>
+                <span id="cvv-hint-empty" class="cvv-hint hint">CVV field cannot be blank</span>
               </label>
             </div>
           </div>           	         

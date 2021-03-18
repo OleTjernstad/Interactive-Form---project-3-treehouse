@@ -26,28 +26,22 @@ const _removeNotValid = (element, hintSelector) => {
 }
 
 const validateNameField = (element) => {
-    if (_isNotEmpty(element.value)) {
-        _removeNotValid(element.parentElement, "#name-hint");
-        return true;
-    }
-    _displayNotValid(element.parentElement, "#name-hint");
-    return false;
+    let valid = true;
+    valid = _isNotEmpty(element.value);
+    _showOrHideError(element, valid, "#name-hint");
+    
+   return valid;
 };
 
 const validateEmailField = (element) => {
+    let valid = true;
+    valid = _isNotEmpty(element.value);
+    _showOrHideError(element, valid, "#email-hint-provided");
 
-    if (_isNotEmpty(element.value)) {
-        _removeNotValid(element.parentElement, "#email-hint-provided");
-    } else {
-        _displayNotValid(element.parentElement, "#email-hint-provided");
-        return false;
-    }
-    if (_isValidEmail(element.value)) {
-        _removeNotValid(element.parentElement, "#email-hint");
-        return true;
-    }
-    _displayNotValid(element.parentElement, "#email-hint");
-    return false;
+    valid = _isValidEmail(element.value);
+    _showOrHideError(element, valid, "#email-hint");
+    
+    return valid;
 };
 
 const validateActivities = (elements) => {
@@ -59,6 +53,7 @@ const validateActivities = (elements) => {
     }
 
     if(selectedItems.length < 1) {
+        
         _displayNotValid(
           elements[0].parentElement.parentElement.parentElement,
           "#activities-hint"
@@ -69,36 +64,54 @@ const validateActivities = (elements) => {
       elements[0].parentElement.parentElement.parentElement,
       "#activities-hint"
     );
+    
     return true;
 };
-const _showOrHideErrorForPayment = (element, valid, hintSelector) => {
+const _showOrHideError = (element, valid, hintSelector) => {
     if (valid) {
         _removeNotValid(element.parentElement, hintSelector);
     } else {
         _displayNotValid(element.parentElement, hintSelector);
     }
-    return valid;
 }
 const validateCVV = (CVV) => {
-    return _showOrHideErrorForPayment(
-      CVV,
-      _isValidNumber(CVV.value, 3),
-      "#cvv-hint"
-    );
+    let valid = true;
+    valid = _isNotEmpty(CVV.value);
+    _showOrHideError(CVV, valid, "#cvv-hint-empty");
+
+    valid = _isValidNumber(CVV.value, "1,");
+    _showOrHideError(CVV, valid, "#cvv-hint-number-only");
+
+    valid = _isValidNumber(CVV.value, "3");
+    _showOrHideError(CVV, valid, "#cvv-hint");
+
+    return valid;
 }
 const validateZip = (zipCode) => {
-    return _showOrHideErrorForPayment(
-      zipCode,
-      _isValidNumber(zipCode.value, 5),
-      "#zip-hint"
-    );
+    let valid = true;
+    valid = _isNotEmpty(zipCode.value);
+    _showOrHideError(zipCode, valid, "#zip-hint-empty");
+
+    valid = _isValidNumber(zipCode.value, "1,");
+    _showOrHideError(zipCode, valid, "#zip-hint-number-only");
+
+    valid = _isValidNumber(zipCode.value, "5");
+    _showOrHideError(zipCode, valid, "#zip-hint");
+
+    return valid;
 }
 const validateCardNum = (cardNum) => {
-    return _showOrHideErrorForPayment(
-      cardNum,
-      _isValidNumber(cardNum.value, "13,16"),
-      "#cc-hint"
-    );
+    let valid = true;
+    valid = _isNotEmpty(cardNum.value);
+    _showOrHideError(cardNum, valid, "#cc-hint-empty");
+    
+    valid = _isValidNumber(cardNum.value, "1,");
+    _showOrHideError(cardNum, valid, "#cc-hint-number-only");
+
+    valid = _isValidNumber(cardNum.value, "13,16");
+    _showOrHideError(cardNum, valid, "#cc-hint");
+    
+    return valid;
 }
 const validatePayment = (cardNum, zipCode, CVV, selectedPaymentType) => {
     if (selectedPaymentType === "credit-card") {
