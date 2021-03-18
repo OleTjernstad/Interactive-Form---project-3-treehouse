@@ -66,18 +66,27 @@ const _showOrHideErrorForPayment = (element, valid) => {
     }
     return valid;
 }
+const validateCVV = (CVV) => {
+    return _showOrHideErrorForPayment(
+        CVV, _isValidNumber(CVV.value, 3)
+    );
+}
+const validateZip = (zipCode) => {
+    return _showOrHideErrorForPayment(
+          zipCode, _isValidNumber(zipCode.value, 5)
+        );
+}
+const validateCardNum = (cardNum) => {
+    return _showOrHideErrorForPayment(
+          cardNum, _isValidNumber(cardNum.value, "13,16")
+        );
+}
 const validatePayment = (cardNum, zipCode, CVV, selectedPaymentType) => {
     if (selectedPaymentType === "credit-card") {
         
-        let isCVVValid = _showOrHideErrorForPayment(
-          CVV, _isValidNumber(CVV.value, 3)
-        );
-        let isZipValid = _showOrHideErrorForPayment(
-          zipCode, _isValidNumber(zipCode.value, 5)
-        );
-        let isCardNumValid = _showOrHideErrorForPayment(
-          cardNum, _isValidNumber(cardNum.value, "13,16")
-        );
+        let isCVVValid = validateCVV(CVV);
+        let isZipValid = validateZip(zipCode);
+        let isCardNumValid = validateCardNum(cardNum);
 
        if (isCVVValid)
 

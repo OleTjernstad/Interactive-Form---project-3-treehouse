@@ -129,12 +129,47 @@ const focusStateActivities = (event) => {
     }
 };
 
+const liveValidation = (element) => {
+    if (element.id) {
+    switch (element.id) {
+      case "name":
+        validateNameField(element);
+        break;
+      case "email":
+        validateEmailField(element);
+        break;
+      case "cvv":
+        validateCVV(element);
+        break;
+      case "zip":
+        validateZip(element);
+        break;
+      case "cc-num":
+        validateCardNum(element);
+        break;
+    }
+} else {
+    if (element.type =='checkbox') {
+        validateActivities(allActivitiesCheckboxes);
+    }
+}
+
+};
+
 basicInfo.addEventListener("change", jobRoleEvaluation);
 shirtDesigns.addEventListener("change", shirtDesignsEvaluation);
-activities.addEventListener("change", activitiesEvaluation);
+activities.addEventListener("change", (event) => {
+    activitiesEvaluation(event); 
+    liveValidation(event.target)
+});
 payment.addEventListener("change", paymentEvaluation);
 
 registrationForm.addEventListener("submit", formSubmit);
+
+basicInfo.addEventListener("keyup", (event) => liveValidation(event.target));
+document
+  .querySelector("#credit-card")
+  .addEventListener("keyup", (event) => liveValidation(event.target));
 
 const init = () => {
     basicInfo.querySelector("#other-job-role").style.display = "none";
