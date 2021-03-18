@@ -1,5 +1,5 @@
 
-const jobRole = document.querySelector("#title");
+const basicInfo = document.querySelector(".basic-info");
 
 const shirtDesigns = document.querySelector("#design");
 const shirtColor = document.querySelector("#color");
@@ -37,9 +37,9 @@ const eventsSameTime = (element) => {
 
 const jobRoleEvaluation = (event) => {
   if (event.target.value === "other") {
-    jobRole.nextElementSibling.style.display = "block";
+    basicInfo.querySelector("#other-job-role").style.display = "block";
   } else {
-    jobRole.nextElementSibling.style.display = "none";
+    basicInfo.querySelector("#other-job-role").style.display = "none";
   }
 }; 
 
@@ -102,24 +102,23 @@ const paymentEvaluation = (event) => {
 }
 
 const formSubmit = (event) => {
-    let valid = true;
-    
-    valid = validateNameField(event.target.querySelector("#name"));
-    valid = validateEmailField(event.target.querySelector("#email")) && valid ? true : false;
-    valid = validateActivities(allActivitiesCheckboxes) && valid ? true : false;
-    valid =
+
+    let isNameValid = validateNameField(basicInfo.querySelector("#name"));
+    let isEmailValid =
+      validateEmailField(basicInfo.querySelector("#email"));
+    let isActivitiesValid = validateActivities(allActivitiesCheckboxes);
+    let isPaymentValid =
       validatePayment(
         event.target.querySelector("#cc-num"),
         event.target.querySelector("#zip"),
         event.target.querySelector("#cvv"),
         payment.value
-      ) && valid
-        ? true
-        : false;
+      );
 
-    if (!valid) {
-      event.preventDefault();
+    if (isNameValid && isEmailValid && isActivitiesValid && isPaymentValid) {
+      return true;
     }
+    event.preventDefault();
 }
 
 const focusStateActivities = (event) => {
@@ -130,18 +129,15 @@ const focusStateActivities = (event) => {
     }
 };
 
-jobRole.addEventListener("change", jobRoleEvaluation)
-
+basicInfo.addEventListener("change", jobRoleEvaluation);
 shirtDesigns.addEventListener("change", shirtDesignsEvaluation);
-
 activities.addEventListener("change", activitiesEvaluation);
-
 payment.addEventListener("change", paymentEvaluation);
 
 registrationForm.addEventListener("submit", formSubmit);
 
 const init = () => {
-    jobRole.nextElementSibling.style.display = "none";
+    basicInfo.querySelector("#other-job-role").style.display = "none";
 
     shirtColor.disabled;
 
