@@ -1,8 +1,8 @@
 /**
  * Check if string contains a word character
- * 
+ *
  * @param {string} string string to test
- * 
+ *
  * @returns boolean
  */
 const _isNotEmpty = (string) => {
@@ -11,9 +11,9 @@ const _isNotEmpty = (string) => {
 };
 /**
  * Check if string is valid email
- * 
+ *
  * @param {string} email email string to test
- * 
+ *
  * @returns boolean
  */
 const _isValidEmail = (email) => {
@@ -23,76 +23,76 @@ const _isValidEmail = (email) => {
 
 /**
  * Check if test string is a valid number of specified length
- * 
+ *
  * @param {number} number the number to test
  * @param {string} length the regex length string (1 | 1, | 2,3)
- * 
+ *
  * @returns boolean
  */
 const _isValidNumber = (number, length) => {
     const regex = new RegExp(`^\\d{${length}}$`);
     return regex.test(number);
-}
+};
 
 /**
- * Show the error message 
- * 
+ * Show the error message
+ *
  * @param {HTMLElement} element the element to add not-valid / valid class to
  * @param {string} hintSelector the identifier of the message block
  */
 const _displayNotValid = (element, hintSelector) => {
     element.classList.add("not-valid");
     element.classList.remove("valid");
-    element.querySelector(hintSelector).style.display = "block"; 
-}
+    element.querySelector(hintSelector).style.display = "block";
+};
 
 /**
- * Remove the error message 
- * 
+ * Remove the error message
+ *
  * @param {HTMLElement} element the element to add not-valid / valid class to
  * @param {string} hintSelector the identifier of the message block
  */
 const _removeNotValid = (element, hintSelector) => {
     element.classList.remove("not-valid");
     element.classList.add("valid");
-    element.querySelector(hintSelector).style.display = "none"; 
-}
+    element.querySelector(hintSelector).style.display = "none";
+};
 
 /**
  * add or remove the error message
- * 
+ *
  * @param {HTMLElement} element The validated element
  * @param {boolean} valid to add or remove the message
  * @param {string} hintSelector the message selector
  */
 const _showOrHideError = (element, valid, hintSelector) => {
-  if (valid) {
-    _removeNotValid(element.parentElement, hintSelector);
-  } else {
-    _displayNotValid(element.parentElement, hintSelector);
-  }
+    if (valid) {
+        _removeNotValid(element.parentElement, hintSelector);
+    } else {
+        _displayNotValid(element.parentElement, hintSelector);
+    }
 };
 
 /**
  * Validating the name field and add / remove error message
- * 
+ *
  * @param {HTMLElement} element the element to validate
- * 
+ *
  * @returns boolean
  */
 const validateNameField = (element) => {
     let valid = true;
     valid = _isNotEmpty(element.value);
     _showOrHideError(element, valid, "#name-hint");
-    
-   return valid;
+
+    return valid;
 };
 
 /**
  * Validating the email field and add / remove error message
- * 
+ *
  * @param {HTMLElement} element the element to validate
- * 
+ *
  * @returns boolean
  */
 const validateEmailField = (element) => {
@@ -102,15 +102,15 @@ const validateEmailField = (element) => {
 
     valid = _isValidEmail(element.value);
     _showOrHideError(element, valid, "#email-hint");
-    
+
     return valid;
 };
 
 /**
  * Validating the activities field and add / remove error message
- * 
+ *
  * @param {HTMLElement} element the element to validate
- * 
+ *
  * @returns boolean
  */
 const validateActivities = (elements) => {
@@ -121,27 +121,26 @@ const validateActivities = (elements) => {
         }
     }
 
-    if(selectedItems.length < 1) {
-        
+    if (selectedItems.length < 1) {
         _displayNotValid(
-          elements[0].parentElement.parentElement.parentElement,
-          "#activities-hint"
+            elements[0].parentElement.parentElement.parentElement,
+            "#activities-hint"
         );
         return false;
-    } 
+    }
     _removeNotValid(
-      elements[0].parentElement.parentElement.parentElement,
-      "#activities-hint"
+        elements[0].parentElement.parentElement.parentElement,
+        "#activities-hint"
     );
-    
+
     return true;
 };
 
 /**
  * Validate the CVV field and add or remove the error message
- * 
+ *
  * @param {HTMLElement} CVV The CVV element to validate
- * 
+ *
  * @returns boolean
  */
 const validateCVV = (CVV) => {
@@ -156,13 +155,13 @@ const validateCVV = (CVV) => {
     _showOrHideError(CVV, valid, "#cvv-hint");
 
     return valid;
-}
+};
 
 /**
  * Validate the zipCode field and add or remove the error message
- * 
+ *
  * @param {HTMLElement} zipCode The zipCode element to validate
- * 
+ *
  * @returns boolean
  */
 const validateZip = (zipCode) => {
@@ -177,41 +176,40 @@ const validateZip = (zipCode) => {
     _showOrHideError(zipCode, valid, "#zip-hint");
 
     return valid;
-}
+};
 
 /**
  * Validate the cardNum field and add or remove the error message
- * 
+ *
  * @param {HTMLElement} cardNum The cardNum element to validate
- * 
+ *
  * @returns boolean
  */
 const validateCardNum = (cardNum) => {
     let valid = true;
     valid = _isNotEmpty(cardNum.value);
     _showOrHideError(cardNum, valid, "#cc-hint-empty");
-    
+
     valid = _isValidNumber(cardNum.value, "1,");
     _showOrHideError(cardNum, valid, "#cc-hint-number-only");
 
     valid = _isValidNumber(cardNum.value, "13,16");
     _showOrHideError(cardNum, valid, "#cc-hint");
-    
+
     return valid;
-}
+};
 /**
  * Validate all payment fields on submit if credit-card is selected
- * 
+ *
  * @param {HTMLElement} cardNum The Credit card field element
  * @param {HTMLElement} zipCode  The zip Code field element
  * @param {HTMLElement} CVV The CVV field element
  * @param {string} selectedPaymentType the selected payment type
- * 
+ *
  * @returns boolean
  */
 const validatePayment = (cardNum, zipCode, CVV, selectedPaymentType) => {
     if (selectedPaymentType === "credit-card") {
-        
         let isCVVValid = validateCVV(CVV);
         let isZipValid = validateZip(zipCode);
         let isCardNumValid = validateCardNum(cardNum);
