@@ -17,7 +17,7 @@ const _isNotEmpty = (string) => {
  * @returns boolean
  */
 const _isValidEmail = (email) => {
-    const regex = /^[^@]+@[^@]+\.[a-z]+$/i;
+    const regex = /^[^@]+@[^@]+\.(com|no)+$/i;
     return regex.test(email);
 };
 
