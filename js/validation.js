@@ -216,8 +216,6 @@ const validatePayment = (cardNum, zipCode, CVV, selectedPaymentType) => {
         let isZipValid = validateZip(zipCode);
         let isCardNumValid = validateCardNum(cardNum);
 
-       if (isCVVValid)
-
         return isCVVValid && isZipValid && isCardNumValid;
     }
     return true;
