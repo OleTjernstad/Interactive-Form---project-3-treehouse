@@ -191,7 +191,7 @@ const liveValidation = (element) => {
 const init = () => {
     basicInfo.querySelector("#other-job-role").style.display = "none";
 
-    shirtColor.disabled;
+    shirtColor.disabled = true;
 
     for (let child of payment.parentElement.parentElement.children) {
         if (child.id == "bitcoin" || child.id == "paypal") {
